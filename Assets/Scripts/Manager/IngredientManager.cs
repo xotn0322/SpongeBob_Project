@@ -14,10 +14,18 @@ public class IngredientManager : MonoBehaviour, IEngineComponent
     }
     private static IngredientManager _instance;
 
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        _instance = this;
+    }
+
     public IEngineComponent Init()
     {
-        SetPosition();
-        InitSpawn();
 
         return this;
     }
