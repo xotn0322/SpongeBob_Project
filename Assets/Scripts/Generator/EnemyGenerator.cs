@@ -8,6 +8,16 @@ public class EnemyGanerator : MonoBehaviour
 
     //public
 
+
     //function
+    public void Init()
+    {
+        PositionSetup();
+    }
+
+    private void PositionSetup()
+    {
+        enemyPositions.Add(new Vector3(0, 0, 0));
+    }
     
 }
