@@ -39,7 +39,8 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<int, Type>_monoBehaviorEngineComponents = new Dictionary<int, Type>()
     {
-        {550000, typeof(IngredientManager)}
+        {550000, typeof(IngredientManager)},
+        {560000, typeof(EnemyManager)}
     };
 
     private void Awake()

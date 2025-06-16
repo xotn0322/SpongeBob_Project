@@ -23,7 +23,8 @@ public class GameDataManager : IEngineComponent
     {
         _gameDataManagers = new Dictionary<Type, IDataManager>
         {
-            {typeof(IngredientData), IngredientDataManager.Instance}
+            {typeof(IngredientData), IngredientDataManager.Instance},
+            {typeof(EnemyData), EnemyDataManager.Instance}
         };
 
         return this;
