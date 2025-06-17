@@ -23,4 +23,13 @@ public class IngredientComponent : MonoBehaviour
     {
         return ingredientData;
     }
+
+    private void OnDestroy()
+    {
+        // Ingredient가 파괴될 때 IngredientManager에서 해당 Ingredient를 제거합니다.
+        if (IngredientManager.Instance != null)
+        {
+            IngredientManager.Instance.RemoveIngredient(gameObject.GetInstanceID());
+        }
+    }
 }

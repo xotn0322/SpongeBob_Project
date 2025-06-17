@@ -4,7 +4,7 @@ public class SceneChange : MonoBehaviour
 {
 public void btnSceneChange()
 {
-    CSceneManager.Instance.LoadScene("SpongeBob_Project");
+    CSceneManager.Instance.LoadSceneWithProcess("SpongeBob_Project");
 }
 
 public void QuitGame()

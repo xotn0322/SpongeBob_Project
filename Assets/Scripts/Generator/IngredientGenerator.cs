@@ -71,6 +71,11 @@ public class IngredientGenerator : MonoBehaviour
                 {
                     // 잡히지 않았다면 재료를 파괴합니다.
                     Destroy(currentIngredient);
+                    // 중요: 재료가 여기서 파괴될 경우 리스너도 제거합니다.
+                    if (grabInteractable != null)
+                    {
+                        grabInteractable.selectExited.RemoveListener(OnIngredientReleased);
+                    }
                     currentIngredient = null; 
                     grabInteractable = null; 
                     ingredientRigidbody = null; 
@@ -114,6 +119,12 @@ public class IngredientGenerator : MonoBehaviour
     // XRGrabInteractable이 해제될 때 호출되는 이벤트 핸들러입니다.
     private void OnIngredientReleased(SelectExitEventArgs args)
     {
+        if (currentIngredient == null)
+        {
+            Debug.LogWarning("OnIngredientReleased called but currentIngredient is already null.");
+            return;
+        }
+
         // Rigidbody를 non-kinematic으로 설정하여 던지기 동작이 원활하게 이루어지도록 합니다.
         if (ingredientRigidbody != null)
         {

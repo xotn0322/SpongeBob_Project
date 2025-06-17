@@ -23,6 +23,9 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-857079616be57254296935da5ef354c4-1556907319-0
         - globalObjectIdString: GlobalObjectId_V1-2-857079616be57254296935da5ef354c4-786981634-0
         - globalObjectIdString: GlobalObjectId_V1-2-857079616be57254296935da5ef354c4-1627291354-0
+        - globalObjectIdString: GlobalObjectId_V1-2-857079616be57254296935da5ef354c4-2135907426-0
+        - globalObjectIdString: GlobalObjectId_V1-2-857079616be57254296935da5ef354c4-2121318133-0
+        - globalObjectIdString: GlobalObjectId_V1-2-857079616be57254296935da5ef354c4-1987148019-0
         values:
         - colorIndex: 2
           iconNameOrGuid: AvatarMask On Icon
@@ -34,3 +37,9 @@ MonoBehaviour:
           iconNameOrGuid: PreMatCube
         - colorIndex: 9
           iconNameOrGuid: Favorite
+        - colorIndex: 9
+          iconNameOrGuid: Favorite
+        - colorIndex: 9
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 3
+          iconNameOrGuid: BoxCollider Icon

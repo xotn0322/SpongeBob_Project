@@ -6,11 +6,15 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class BurgerStackManager : MonoBehaviour
 {
+    //private
+    private List<Transform> ingredients = new List<Transform>();
+    private int totalDamage;
+
+    //public
     public Transform baseTransform; // Bottom Bun의 Transform
     public float stackOffsetY = 0.05f;
 
-    private List<Transform> ingredients = new List<Transform>();
-
+    //function
     public void AddIngredient(Transform ingredient)
     {
         GameObject stackPoint = new GameObject($"StackPoint_{ingredient.name}");
@@ -57,6 +61,8 @@ public class BurgerStackManager : MonoBehaviour
                 }
             }
         }
+
+        CalculateTotalDamage();
     }
 
     public void OnTriggerEnter(Collider other)
@@ -79,5 +85,18 @@ public class BurgerStackManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void CalculateTotalDamage()
+    {
+        foreach (var ingredient in ingredients)
+        {
+            totalDamage += ingredient.GetComponent<IngredientComponent>().GetIngredientData().Damage;
+        }
+    }
+
+    public int GetTotalDamage()
+    {
+        return totalDamage;
     }
 }

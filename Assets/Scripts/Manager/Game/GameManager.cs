@@ -48,22 +48,23 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        // 이미 인스턴스가 존재하는 경우
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         _instance = this;
-        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(gameObject);  // this 대신 gameObject 사용
 
         foreach (var engineComponent in _engineComponents)
         {
             engineComponent.Value.Init();
         }
-
-        // LoadGame();
-        // InitMonoBehaviourGameEngine();
-        //StartCoroutine(LoadSceneProcess());
-
-        
     }
 
-    public IEnumerator LoadGameProcess() //SceneManager에서 관리
+    public async void LoadGame() //SceneManager에서 관리
     {
         _LoadComplete = false;
 
@@ -74,22 +75,13 @@ public class GameManager : MonoBehaviour
         Debug.Log("Load Game Data...");
         _LoadProgress = 0.55f;
         _LoadProgressText = "게임 데이터 로딩 중...";
-        var loadDataTask = GameDataManager.Instance.LoadDataManager();
-        while (!loadDataTask.IsCompleted)
-        {
-            yield return null; // Wait for a frame
-        }
-        if (loadDataTask.IsFaulted)
-        {
-            Debug.LogError($"Error loading game data: {loadDataTask.Exception}");
-            yield break;
-        }
-        yield return new WaitForSeconds(0.2f);
+        await GameDataManager.Instance.LoadDataManager();
+        await Task.Delay(200);
 
         _LoadProgress = 0.99f;
         _LoadProgressText = "리소스 적용 중...";
-        yield return new WaitForSeconds(0.3f);
-
+        await Task.Delay(300);
+        
         _LoadComplete = true;
     }
 
@@ -147,26 +139,5 @@ public class GameManager : MonoBehaviour
         Destroy(gameObject);
         Application.Quit();
 #endif
-    }
-
-        IEnumerator LoadSceneProcess()
-        {
-        // Wait 2 frames for LoadingScene
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-
-        yield return LoadGameProcess();
-
-        // Wait 2 frames for applying new Scene
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-
-        GameManager.Instance.InitMonoBehaviourGameEngine();
-
-        // Wait 1 frame for MonoBehaviour GameEngine Load
-        yield return new WaitForEndOfFrame();
-        
-        GameManager.Instance.StartGame();
-
     }
 }

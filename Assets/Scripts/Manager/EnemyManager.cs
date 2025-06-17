@@ -13,6 +13,16 @@ public class EnemyManager : MonoBehaviour, IEngineComponent
     }
     private static EnemyManager _instance;
 
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        _instance = this;
+    }
+
     public IEngineComponent Init()
     {
         return this;
@@ -33,8 +43,17 @@ public class EnemyManager : MonoBehaviour, IEngineComponent
         var enemyComponent = gameObject.GetComponent<EnemyComponent>();
         gameObject.transform.position = globalPositon;
         enemyComponent.Init();
-        enemys.Add(enemys.Count, gameObject);
+        enemys.Add(gameObject.GetInstanceID(), gameObject);
  
         return gameObject;
+    }
+
+    public void RemoveEnemy(int instanceID)
+    {
+        if (enemys.ContainsKey(instanceID))
+        {
+            enemys.Remove(instanceID);
+            Debug.Log($"Removed enemy with InstanceID: {instanceID} from EnemyManager.");
+        }
     }
 }

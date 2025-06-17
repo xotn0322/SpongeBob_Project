@@ -24,11 +24,16 @@ public class CSceneManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    public void LoadScene(string sceneName)
+    public void LoadSceneWithProcess(string sceneName)
     {
         _nextScene = sceneName;
         //SceneManager.LoadScene("LoadingScene");
         StartCoroutine(LoadSceneProcess());
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 
     IEnumerator LoadSceneProcess()
@@ -40,19 +45,17 @@ public class CSceneManager : MonoBehaviour
         AsyncOperation op = SceneManager.LoadSceneAsync(_nextScene);
         op.allowSceneActivation = false;
 
-        //GameManager.Instance.LoadGame();
+        GameManager.Instance.LoadGame();
 
         while (GameManager.Instance.IsLoadComplete() == false &&
                op.isDone == false)
         {
             yield return new WaitForEndOfFrame();
-            //LoadingSceneController.Instance.SetLoadingProgress(GameManager.Instance.GetLoadProgress());
-            //LoadingSceneController.Instance.SetLoadingText(GameManager.Instance.GetLoadProgressText());
+            // LoadingSceneController.Instance.SetLoadingProgress(GameManager.Instance.GetLoadProgress());
+            // LoadingSceneController.Instance.SetLoadingText(GameManager.Instance.GetLoadProgressText());
         }
 
         op.allowSceneActivation = true;
-
-        GameManager.Instance.LoadGameProcess();
 
         // Wait 2 frames for applying new Scene
         yield return new WaitForEndOfFrame();

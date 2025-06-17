@@ -252,13 +252,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1387617760484836275}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0, w: -1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.5, y: -0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 0.7276, y: 1.3859, z: -0.1974}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4040926207069624572}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -180, y: 90, z: -90}
 --- !u!33 &887644443221412221
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -266,7 +266,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1387617760484836275}
-  m_Mesh: {fileID: 4300000, guid: 9a94c04e25533ab469790edaf56fd66f, type: 2}
+  m_Mesh: {fileID: -2432090755550338912, guid: dfaef951424bfcf4480274ce55adfcf5, type: 3}
 --- !u!23 &3290393936603788251
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -487,7 +487,7 @@ GameObject:
   - component: {fileID: 4256994562480814140}
   - component: {fileID: 1028080088210316627}
   m_Layer: 0
-  m_Name: Object_29
+  m_Name: WIndows
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -501,13 +501,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2115288905378859515}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0, w: -1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 0.7313, y: 1.1863, z: -0.1245}
+  m_LocalScale: {x: 0.05, y: 0.06, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4040926207069624572}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!33 &4256994562480814140
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -515,7 +515,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2115288905378859515}
-  m_Mesh: {fileID: 4300000, guid: 8b35935743a740f4ea2b2c52ecaf9e28, type: 2}
+  m_Mesh: {fileID: -2432090755550338912, guid: 25c5683369cb8974898c4d5978c5c988, type: 3}
 --- !u!23 &1028080088210316627
 MeshRenderer:
   m_ObjectHideFlags: 0

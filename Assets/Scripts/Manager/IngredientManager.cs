@@ -45,9 +45,18 @@ public class IngredientManager : MonoBehaviour, IEngineComponent
         var ingredientComponent = gameObject.GetComponent<IngredientComponent>();
         gameObject.transform.position = globalPositon;
         ingredientComponent.Init();
-        ingredients.Add(ingredients.Count, gameObject);
+        ingredients.Add(gameObject.GetInstanceID(), gameObject);
  
         return gameObject;
+    }
+
+    public void RemoveIngredient(int instanceID)
+    {
+        if (ingredients.ContainsKey(instanceID))
+        {
+            ingredients.Remove(instanceID);
+            Debug.Log($"Removed ingredient with InstanceID: {instanceID} from IngredientManager.");
+        }
     }
 
     private void InitSpawn()

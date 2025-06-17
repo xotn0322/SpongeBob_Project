@@ -2,20 +2,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
+using Unity.Profiling;
+using System.Runtime.CompilerServices;
+using UnityEngine.AI;
 
 public class EnemyGenerator : MonoBehaviour
 {
     //private
     private List<Vector3> enemyPositions = new List<Vector3>();
     private BoxCollider boxCollider; // BoxCollider에 대한 참조
+    private GameObject prefab;
 
     //public
     public EEnemyName enemyType; // 스폰할 적의 이름
     public float fixedYPosition = 0f; // 고정된 Y 위치
     public long spawnIntervalMs = 5000; // 5초 기본 스폰 간격 (밀리초)
     public bool prefabRandom = false;
+    public GameObject destination;
 
     //function
+    public void Start()
+    {
+        Init();
+    }
 
     public void Init()
     {
@@ -57,11 +66,18 @@ public class EnemyGenerator : MonoBehaviour
             Array enumValues = Enum.GetValues(typeof(EEnemyName));
             EEnemyName randomEnemyName = (EEnemyName)enumValues.GetValue(UnityEngine.Random.Range(0, enumValues.Length));
 
-            EnemyManager.Instance.SpawnPrefab(randomEnemyName, spawnPosition);
+            prefab = EnemyManager.Instance.SpawnPrefab(randomEnemyName, spawnPosition);
         }
         else
         {
-            EnemyManager.Instance.SpawnPrefab(enemyType, spawnPosition);
+            prefab = EnemyManager.Instance.SpawnPrefab(enemyType, spawnPosition);
         }
+
+        SetDestination(prefab.GetComponent<NavMeshAgent>());
+    }
+
+    private void SetDestination(NavMeshAgent agent)
+    {
+        agent.SetDestination(new Vector3(destination.transform.position.x, prefab.transform.position.y, destination.transform.position.z));
     }
 }
