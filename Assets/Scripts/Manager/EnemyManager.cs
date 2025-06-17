@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Resources;
 
 public class EnemyManager : MonoBehaviour, IEngineComponent
 {
@@ -25,9 +26,9 @@ public class EnemyManager : MonoBehaviour, IEngineComponent
     
     //functions
 
-    public GameObject SpawnPrefab(EIngredientName prefab, Vector3 globalPositon)
+    public GameObject SpawnPrefab(EEnemyName prefab, Vector3 globalPositon)
     {
-        var resource = ResourcesManager.Instance.Load<GameObject>(IOUtil.CombinePath(Constant.Path.RESOURCE_INGREDIENT_PATH, prefab.ToString()));
+        var resource = ResourcesManager.Instance.Load<GameObject>(IOUtil.CombinePath(Constant.Path.RESOURCE_ENEMY_PATH, prefab.ToString()));
         var gameObject = Instantiate(resource);
         var enemyComponent = gameObject.GetComponent<EnemyComponent>();
         gameObject.transform.position = globalPositon;

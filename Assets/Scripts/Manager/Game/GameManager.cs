@@ -6,6 +6,8 @@ using System.Resources;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
+using TMPro;
 
 
 public class GameManager : MonoBehaviour
@@ -25,6 +27,9 @@ public class GameManager : MonoBehaviour
     private float _LoadProgress = 0f;
     private string _LoadProgressText;
 
+    //test
+    private bool _EndCoroutine = false;
+
     //public
 
 
@@ -39,8 +44,9 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<int, Type>_monoBehaviorEngineComponents = new Dictionary<int, Type>()
     {
-        {550000, typeof(IngredientManager)},
-        {560000, typeof(EnemyManager)}
+        {550000, typeof(TimeManager)},
+        {560000, typeof(IngredientManager)},
+        {570000, typeof(EnemyManager)}
     };
 
     private void Awake()
@@ -56,6 +62,8 @@ public class GameManager : MonoBehaviour
         // LoadGame();
         // InitMonoBehaviourGameEngine();
         StartCoroutine(LoadSceneProcess());
+
+        
     }
 
     public IEnumerator LoadGameProcess() //SceneManager에서 관리
@@ -162,5 +170,7 @@ public class GameManager : MonoBehaviour
     yield return new WaitForEndOfFrame();
     
     GameManager.Instance.StartGame();
+
+    _EndCoroutine = true;
 }
 }
