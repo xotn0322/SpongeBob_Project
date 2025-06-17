@@ -27,9 +27,6 @@ public class GameManager : MonoBehaviour
     private float _LoadProgress = 0f;
     private string _LoadProgressText;
 
-    //test
-    private bool _EndCoroutine = false;
-
     //public
 
 
@@ -61,7 +58,7 @@ public class GameManager : MonoBehaviour
 
         // LoadGame();
         // InitMonoBehaviourGameEngine();
-        StartCoroutine(LoadSceneProcess());
+        //StartCoroutine(LoadSceneProcess());
 
         
     }
@@ -152,25 +149,24 @@ public class GameManager : MonoBehaviour
 #endif
     }
 
-    IEnumerator LoadSceneProcess()
-{
-    // Wait 2 frames for LoadingScene
-    yield return new WaitForEndOfFrame();
-    yield return new WaitForEndOfFrame();
+        IEnumerator LoadSceneProcess()
+        {
+        // Wait 2 frames for LoadingScene
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
 
-    yield return LoadGameProcess();
+        yield return LoadGameProcess();
 
-    // Wait 2 frames for applying new Scene
-    yield return new WaitForEndOfFrame();
-    yield return new WaitForEndOfFrame();
+        // Wait 2 frames for applying new Scene
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
 
-    GameManager.Instance.InitMonoBehaviourGameEngine();
+        GameManager.Instance.InitMonoBehaviourGameEngine();
 
-    // Wait 1 frame for MonoBehaviour GameEngine Load
-    yield return new WaitForEndOfFrame();
-    
-    GameManager.Instance.StartGame();
+        // Wait 1 frame for MonoBehaviour GameEngine Load
+        yield return new WaitForEndOfFrame();
+        
+        GameManager.Instance.StartGame();
 
-    _EndCoroutine = true;
-}
+    }
 }

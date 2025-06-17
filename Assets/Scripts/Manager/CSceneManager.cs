@@ -27,7 +27,7 @@ public class CSceneManager : MonoBehaviour
     public void LoadScene(string sceneName)
     {
         _nextScene = sceneName;
-        SceneManager.LoadScene("LoadingScene");
+        //SceneManager.LoadScene("LoadingScene");
         StartCoroutine(LoadSceneProcess());
     }
 
@@ -46,11 +46,13 @@ public class CSceneManager : MonoBehaviour
                op.isDone == false)
         {
             yield return new WaitForEndOfFrame();
-            LoadingSceneController.Instance.SetLoadingProgress(GameManager.Instance.GetLoadProgress());
-            LoadingSceneController.Instance.SetLoadingText(GameManager.Instance.GetLoadProgressText());
+            //LoadingSceneController.Instance.SetLoadingProgress(GameManager.Instance.GetLoadProgress());
+            //LoadingSceneController.Instance.SetLoadingText(GameManager.Instance.GetLoadProgressText());
         }
 
         op.allowSceneActivation = true;
+
+        GameManager.Instance.LoadGameProcess();
 
         // Wait 2 frames for applying new Scene
         yield return new WaitForEndOfFrame();

@@ -16,10 +16,6 @@ public class EnemyGenerator : MonoBehaviour
     public bool prefabRandom = false;
 
     //function
-    public void Start()
-    {
-        Init();
-    }
 
     public void Init()
     {
