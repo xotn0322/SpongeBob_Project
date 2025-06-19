@@ -9,6 +9,7 @@ public class EnemyComponent : MonoBehaviour
     private GameObject Player;
     private Animator animator;
     private NavMeshAgent navMeshAgent;
+    private bool isDead = false;
 
     //public
     public EEnemyName enemyName;
@@ -42,6 +43,7 @@ public class EnemyComponent : MonoBehaviour
     private void SetEnemyData()
     {
         enemyData = EnemyDataManager.Instance.GetData(enemyName);
+        navMeshAgent.speed = enemyData.Speed;
     }
 
     public EnemyData GetEnemyData()
@@ -81,39 +83,68 @@ public class EnemyComponent : MonoBehaviour
 
     private IEnumerator CheckDeathAfterAnimation()
     {
-        // 애니메이터가 활성화되어 있지 않으면 바로 다음 프레임으로 넘어갑니다.
         if (animator == null || !animator.enabled)
         {
             CheckDeathImmediately();
             yield break;
         }
 
-        // 애니메이션이 시작될 때까지 기다립니다.
         yield return null;
 
-        // "Customer_Standing_Drink_Pint_Chug" 애니메이션 상태가 될 때까지 기다립니다.
         do
         {
             yield return null;
         } while (!animator.GetCurrentAnimatorStateInfo(0).IsName("Customer_Standing_Drink_Pint_Chug"));
 
-        // 애니메이션이 끝날 때까지 기다립니다.
         while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
         {
             yield return null;
         }
 
-        // 애니메이션이 끝난 후 추가적인 딜레이가 필요하면 여기에 추가합니다.
-        // yield return new WaitForSeconds(0.5f);
-
-        CheckDeathImmediately();
+        // Eat 애니메이션이 끝나면 animator를 멈춤
+        animator.enabled = false;
+        // 죽음 체크
+        if (enemyData.Hp <= 0 && !isDead)
+        {
+            isDead = true;
+            Debug.Log($"{gameObject.name} has died (immediate after animation).");
+            if (navMeshAgent != null) navMeshAgent.enabled = false;
+            var rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+                rb.isKinematic = true;
+            }
+            Destroy(gameObject);
+            yield break;
+        }
+        else
+        {
+            animator.enabled = true;
+            Debug.Log($"{gameObject.name} survived eating with {enemyData.Hp} HP remaining.");
+            if (navMeshAgent != null)
+            {
+                navMeshAgent.isStopped = false;
+            }
+        }
     }
 
     private void CheckDeathImmediately()
     {
-        if (enemyData.Hp <= 0)
+        if (enemyData.Hp <= 0 && !isDead)
         {
+            isDead = true;
             Debug.Log($"{gameObject.name} has died.");
+            if (navMeshAgent != null) navMeshAgent.enabled = false;
+            var rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+                rb.isKinematic = true;
+            }
+            if (animator != null) animator.enabled = false;
             Destroy(gameObject);
         }
         else
@@ -128,9 +159,13 @@ public class EnemyComponent : MonoBehaviour
 
     public void OnChildTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<BurgerStackManager>(out BurgerStackManager burgerStackManager))
+        // 부모의 부모에서 BurgerStackManager를 찾음
+        var grandParent = other.transform.parent != null ? other.transform.parent.parent : null;
+        if (grandParent != null && grandParent.TryGetComponent<BurgerStackManager>(out BurgerStackManager burgerStackManager))
         {
             UseHealth(burgerStackManager.GetTotalDamage());
+            // 햄버거도 같이 파괴
+            Destroy(burgerStackManager.gameObject);
         }
     }
 
@@ -141,5 +176,10 @@ public class EnemyComponent : MonoBehaviour
         {
             EnemyManager.Instance.RemoveEnemy(gameObject.GetInstanceID());
         }
+    }
+
+    public bool IsDead()
+    {
+        return isDead;
     }
 }

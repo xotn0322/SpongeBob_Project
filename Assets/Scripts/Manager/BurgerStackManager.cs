@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-// using UnityEngine.XR.Interaction.Toolkit;
 
 
 public class BurgerStackManager : MonoBehaviour
@@ -10,25 +9,10 @@ public class BurgerStackManager : MonoBehaviour
     //private
     private List<Transform> ingredients = new List<Transform>();
     [SerializeField] private int totalDamage;
-    // private XRGrabInteractable burgerGrabInteractable;
-    // private Rigidbody burgerRigidbody;
 
     //public
     public Transform baseTransform; // Bottom Bun의 Transform
     public float stackOffsetY = 0.05f;
-
-    // void Start()
-    // {
-    //     // Bottom_Bun의 XRGrabInteractable과 Rigidbody 가져오기
-    //     burgerGrabInteractable = GetComponent<XRGrabInteractable>();
-    //     burgerRigidbody = GetComponent<Rigidbody>();
-    //     
-    //     if (burgerGrabInteractable != null)
-    //     {
-    //         // 던질 때 호출될 이벤트 추가
-    //         burgerGrabInteractable.selectExited.AddListener(OnBurgerThrown);
-    //     }
-    // }
 
     //function
     public void AddIngredient(Transform ingredient)
@@ -57,6 +41,10 @@ public class BurgerStackManager : MonoBehaviour
             rb.isKinematic = true;
             rb.useGravity = false;
         }
+        if (ingredient.TryGetComponent<Collider>(out var col))
+        {
+            col.enabled = false; // 합칠 때 Collider 비활성화
+        }
 
         // Adjust the BoxCollider's Z-position to move with the stack
         if (TryGetComponent<BoxCollider>(out var boxCollider))
@@ -80,29 +68,6 @@ public class BurgerStackManager : MonoBehaviour
 
         CalculateTotalDamage();
     }
-
-    // // 햄버거가 던져질 때 호출되는 메서드
-    // private void OnBurgerThrown(SelectExitEventArgs args)
-    // {
-    //     Debug.Log("Burger thrown! Activating all ingredient physics.");
-    //     
-    //     // 모든 재료의 Rigidbody를 활성화하여 물리 영향을 받도록 함
-    //     foreach (var ingredient in ingredients)
-    //     {
-    //         if (ingredient != null && ingredient.TryGetComponent<Rigidbody>(out var rb))
-    //         {
-    //             rb.isKinematic = false;
-    //             rb.useGravity = true;
-    //             
-    //             // Bottom_Bun의 속도를 모든 재료에 적용
-    //             if (burgerRigidbody != null)
-    //             {
-    //                 rb.velocity = burgerRigidbody.velocity;
-    //                 rb.angularVelocity = burgerRigidbody.angularVelocity;
-    //             }
-    //         }
-    //     }
-    // }
 
     public void OnTriggerEnter(Collider other)
     {
@@ -145,12 +110,15 @@ public class BurgerStackManager : MonoBehaviour
         return totalDamage;
     }
 
-    void OnDisable()
+    private void OnDestroy()
     {
-        // 이벤트 리스너 정리
-        // if (burgerGrabInteractable != null)
-        // {
-        //     burgerGrabInteractable.selectExited.RemoveListener(OnBurgerThrown);
-        // }
+        // 햄버거가 파괴될 때 내부 재료들을 IngredientManager에서 삭제
+        foreach (var ingredient in ingredients)
+        {
+            if (ingredient != null)
+            {
+                IngredientManager.Instance?.RemoveIngredient(ingredient.gameObject.GetInstanceID());
+            }
+        }
     }
 }

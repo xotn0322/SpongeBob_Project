@@ -1,19 +1,23 @@
 [
     {
         "id": "Fish_A",
-        "Hp": 100
+        "Hp": 10,
+        "Speed" : 1
     },
     {
         "id": "Fish_B",
-        "Hp": 100
+        "Hp": 10,
+        "Speed" : 1
     },
     {
         "id": "Fish_C",
-        "Hp": 100
+        "Hp": 10,
+        "Speed" : 1
     },
     {
         "id": "Fish_D",
-        "Hp": 100
+        "Hp": 10,
+        "Speed" : 1
     }
   ]
   

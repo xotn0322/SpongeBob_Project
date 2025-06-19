@@ -6,7 +6,11 @@ public class DestinationComponent : MonoBehaviour
     {
         if (other.TryGetComponent<EnemyComponent>(out EnemyComponent enemyComponent))
         {
-            enemyComponent.AttackPlayer(1);
+            if (!enemyComponent.IsDead())
+            {
+                enemyComponent.AttackPlayer(1);
+            }
+            
             Destroy(enemyComponent.gameObject);
         }
     }

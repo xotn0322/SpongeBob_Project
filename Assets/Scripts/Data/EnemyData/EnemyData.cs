@@ -7,6 +7,8 @@ public class EnemyData
 
     public int Hp;
 
+    public float Speed;
+
     public EEnemyName EnemyName =>
         Enum.TryParse(id, out EEnemyName result) ? result : throw new Exception($"Unknown id: {id}");
 }
