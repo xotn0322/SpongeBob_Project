@@ -17,8 +17,16 @@ public class IngredientGenerator : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // 'XRDirectInteractor' 컴포넌트를 사용하여 컨트롤러를 식별합니다.
-        if (other.GetComponent<XRDirectInteractor>() != null)
+        var interactor = other.GetComponent<XRDirectInteractor>();
+        if (interactor != null)
         {
+            // 현재 컨트롤러가 다른 오브젝트를 잡고 있는지 확인
+            if (interactor.hasSelection)
+            {
+                Debug.Log("Controller already holding an object, cannot generate new ingredient.");
+                return;
+            }
+
             controllerTransform = other.transform; // 컨트롤러의 Transform 저장
 
             // 현재 생성된 재료가 없을 때만 새로운 재료를 생성합니다.

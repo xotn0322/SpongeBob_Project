@@ -55,7 +55,7 @@ public class IngredientManager : MonoBehaviour, IEngineComponent
         if (ingredients.ContainsKey(instanceID))
         {
             ingredients.Remove(instanceID);
-            Debug.Log($"Removed ingredient with InstanceID: {instanceID} from IngredientManager.");
+            // Debug.Log($"Removed ingredient with InstanceID: {instanceID} from IngredientManager.");
         }
     }
 
