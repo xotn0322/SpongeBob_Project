@@ -3725,6 +3725,10 @@ PrefabInstance:
       propertyPath: m_ControllerTransform
       value: 
       objectReference: {fileID: 9207059521872840845}
+    - target: {fileID: 4412133240472006237, guid: 1c87a43e231752e4f9a8b7ec587ecb06, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.9
+      objectReference: {fileID: 0}
     - target: {fileID: 4420188164374120217, guid: 1c87a43e231752e4f9a8b7ec587ecb06, type: 3}
       propertyPath: m_ControllerTransform
       value: 
