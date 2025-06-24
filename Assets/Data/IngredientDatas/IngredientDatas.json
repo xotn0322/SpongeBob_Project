@@ -1,0 +1,33 @@
+[
+    {
+      "id": "Top_Bun",
+      "Description": "",
+      "Damage": 10
+    },
+    {
+      "id": "Bottom_Bun",
+      "Description": "",
+      "Damage": 10
+    },
+    {
+      "id": "Patty",
+      "Description": "",
+      "Damage": 10
+    },
+    {
+      "id": "Cheese",
+      "Description": "",
+      "Damage": 10
+    },
+    {
+      "id": "Tomato",
+      "Description": "",
+      "Damage": 10
+    },
+    {
+      "id": "Lettuce",
+      "Description": "",
+      "Damage": 10
+    }
+  ]
+  

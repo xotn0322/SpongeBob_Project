@@ -1,0 +1,23 @@
+[
+    {
+        "id": "Fish_A",
+        "Hp": 10,
+        "Speed" : 1
+    },
+    {
+        "id": "Fish_B",
+        "Hp": 10,
+        "Speed" : 1
+    },
+    {
+        "id": "Fish_C",
+        "Hp": 10,
+        "Speed" : 1
+    },
+    {
+        "id": "Fish_D",
+        "Hp": 10,
+        "Speed" : 1
+    }
+  ]
+  
